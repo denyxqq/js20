@@ -1,32 +1,22 @@
-// #1
-const images = document.querySelectorAll(".image");
-const lightbox = document.getElementById("lightbox");
-const fullImg = document.getElementById("fullImg");
-let currentIndex = 0;
-
-images.forEach((img, index) => {
-  img.addEventListener("click", () => {
-    fullImg.src = img.src;
-    lightbox.style.display = "flex";
-    currentIndex = index;
-  });
-});
-
-document.addEventListener("keydown", (event) => {
-  if (lightbox.style.display === "flex") {
-    if (event.key === "ArrowRight") {
-      currentIndex = (currentIndex + 1) % images.length;
-    } else if (e.key === "ArrowLeft") {
-      currentIndex = (currentIndex - 1 + images.length) % images.length;
+//1
+const gallery = document.querySelector("ul.gallery");
+const count = gallery.children;
+let x = 0;
+for(let i = 0; i < count.length; i++){
+count[i].classList.add("full-image-container");
+}
+count[0].classList.remove("full-image-container");
+document.addEventListener("keydown" , (event) => {
+    if (event.code === "ArrowRight" && x < 5){
+    x += 1;
+    count[x-1].classList.add("full-image-container");
+    count[x].classList.remove("full-image-container");
+    }else if(e.code === "ArrowLeft" && x > 0){
+    x -= 1;
+    count[x].classList.remove("full-image-container");
+    count[x+1].classList.add("full-image-container");
     }
-    fullImg.src = images[currentIndex].src;
-  }
 });
-
-lightbox.addEventListener("click", () => {
-  lightbox.style.display = "none";
-});
-
 // #2
 const input = document.querySelector(`input[type="number"]`);
 const renderBtn = document.querySelector(`[data-action="render"]`);
