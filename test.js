@@ -1,3 +1,4 @@
+// #1
 const images = document.querySelectorAll(".image");
 const lightbox = document.getElementById("lightbox");
 const fullImg = document.getElementById("fullImg");
@@ -13,7 +14,7 @@ images.forEach((img, index) => {
 
 document.addEventListener("keydown", (event) => {
   if (lightbox.style.display === "flex") {
-    if (e.key === "ArrowRight") {
+    if (event.key === "ArrowRight") {
       currentIndex = (currentIndex + 1) % images.length;
     } else if (e.key === "ArrowLeft") {
       currentIndex = (currentIndex - 1 + images.length) % images.length;
@@ -26,43 +27,36 @@ lightbox.addEventListener("click", () => {
   lightbox.style.display = "none";
 });
 
-//2
-const inputNumber = document.querySelector("input");
-const addButton = document.querySelector('[data-action="render"]');
-const delButton = document.querySelector('[data-action="destroy"]')
-let inputNum = 0
-inputNumber.addEventListener("blur", (event) => {
-  inputNum = Number(e.target.value); 
-  return console.log(inputNum)
-})
+// #2
+const input = document.querySelector(`input[type="number"]`);
+const renderBtn = document.querySelector(`[data-action="render"]`);
+const destroyBtn = document.querySelector(`[data-action="destroy"]`);
+const boxes = document.querySelector("#boxes");
 
-
-let containre = document.querySelector("#boxes") 
-addButton.addEventListener("click", () => {
-  function createBoxes(amount){
-
-    for (let i = 0; i < amount; i++) {
-      let red = Math.round(Math.random() * (255 - 0) + 0);
-      let green = Math.round(Math.random() * (255 - 0) + 0);
-      let blue = Math.round(Math.random() * (255 - 0) + 0);
-      let width = 30 + i * 10 + "px"
-      let height = 30 + i * 10 + "px"
-      const box = document.createElement("div")
-      box.style.width = width
-      box.style.height = height
-      box.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`
-      containre.append(box)
-    }
-    return console.log(containre)
-    }
-  
-    createBoxes(inputNum)
-})
-
-delButton.addEventListener("click", () => {
-  function destroyBoxes(){
-  containre.innerHTML = ""
-  return containre
+let size = 30;
+let color = "";
+const createBoxes = (amount) => {
+  for (let i = 0; i < amount; i += 1) {
+    color = `rgb(${Math.round(Math.random() * (255 - 0) + 0)}, ${Math.round(
+      Math.random() * (255 - 0) + 0
+    )}, ${Math.round(Math.random() * (255 - 0) + 0)})`;
+    boxes.insertAdjacentHTML(
+      "beforeend",
+      `<div style=" width: ${size}px; height: ${size}px; background-color: ${color}"></div>`
+    );
+    size += 10;
   }
-  destroyBoxes()
-})
+};
+
+const destroyBoxes = () => {
+  boxes.innerHTML = "";
+  size = 30;
+};
+
+renderBtn.addEventListener("click", () => {
+  createBoxes(input.value);
+});
+
+destroyBtn.addEventListener("click", () => {
+  destroyBoxes();
+});
