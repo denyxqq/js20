@@ -1,1 +1,1 @@
-const gallery = document.querySelector("ul.gallery");
+const gallary = document.querySelector(".gallery");
